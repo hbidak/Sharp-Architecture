@@ -2,8 +2,8 @@ namespace SharpArch.Web.Http.Castle
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Web.Http.Dependencies;
-    using SharpArch.Domain;
     using global::Castle.Windsor;
 
     /// <summary>
@@ -19,7 +19,7 @@ namespace SharpArch.Web.Http.Castle
         /// <param name="container">The container.</param>
         public WindsorDependencyResolver(IWindsorContainer container)
         {
-            Check.Require(container != null);
+            Contract.Requires(container != null);
 
             this.container = container;
         }

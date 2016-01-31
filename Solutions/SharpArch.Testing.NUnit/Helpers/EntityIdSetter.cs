@@ -1,5 +1,6 @@
 ﻿namespace SharpArch.Testing.NUnit.Helpers
 {
+    using System.Diagnostics.Contracts;
     using System.Reflection;
 
     using SharpArch.Domain;
@@ -22,7 +23,7 @@
             // Set the data property reflectively
             var idProperty = entity.GetType().GetProperty("Id", BindingFlags.Public | BindingFlags.Instance);
 
-            Check.Ensure(idProperty != null, "idProperty could not be found");
+            Contract.Ensures(idProperty != null, "idProperty could not be found");
 
             idProperty.SetValue(entity, id, null);
         }

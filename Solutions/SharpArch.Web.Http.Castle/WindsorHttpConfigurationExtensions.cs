@@ -1,11 +1,11 @@
 ﻿namespace SharpArch.Web.Http.Castle
 {
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Web.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Dependencies;
     using System.Web.Http.Filters;
-    using Domain;
     using Domain.Reflection;
     using global::Castle.Windsor;
 
@@ -24,9 +24,9 @@
         public static void InstallHttpFilterProvider(this ServicesContainer services,
             IWindsorContainer container, ITypePropertyDescriptorCache propertyDescriptorCache)
         {
-            Check.Require(services != null);
-            Check.Require(container != null);
-            Check.Require(propertyDescriptorCache != null);
+            Contract.Requires(services != null);
+            Contract.Requires(container != null);
+            Contract.Requires(propertyDescriptorCache != null);
 
             var providers = services.GetFilterProviders().Where(i => i is ActionDescriptorFilterProvider).ToArray();
             foreach (var filterProvider in providers)

@@ -3,12 +3,12 @@ namespace SharpArch.Web.Http.Castle
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Web.Http.Dependencies;
     using global::Castle.MicroKernel.Lifestyle;
     using global::Castle.Windsor;
-    using SharpArch.Domain;
 
     /// <summary>
     /// Dependency scope for Windsor container.
@@ -24,7 +24,7 @@ namespace SharpArch.Web.Http.Castle
         /// <param name="container">Windsor container.</param>
         public WindsorDependencyScope(IWindsorContainer container)
         {
-            Check.Require(container != null);
+            Contract.Requires(container != null);
             this.container = container;
             this.scope = container.BeginScope();
         }

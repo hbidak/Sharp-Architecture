@@ -3,6 +3,7 @@ using System;
 namespace SharpArch.NHibernate
 {
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using Contracts.Repositories;
 
     using Domain;
@@ -28,8 +29,8 @@ namespace SharpArch.NHibernate
 
         public NHibernateRepositoryWithTypedId(ITransactionManager transactionManager, ISession session)
         {
-            Check.Require(transactionManager != null, "TransactionManager is required.");
-            Check.Require(session != null, "Session is required.");
+            Contract.Requires(transactionManager != null, "TransactionManager is required.");
+            Contract.Requires(session != null, "Session is required.");
 
             this.transactionManager = transactionManager;
             this.session = session;
@@ -78,7 +79,7 @@ namespace SharpArch.NHibernate
 
         public virtual IList<T> FindAll(IDictionary<string, object> propertyValuePairs)
         {
-            Check.Require(propertyValuePairs != null && propertyValuePairs.Count > 0, "propertyValuePairs was null or empty; " + "it has to have at least one property/value pair in it");
+            Contract.Requires(propertyValuePairs != null && propertyValuePairs.Count > 0, "propertyValuePairs was null or empty; " + "it has to have at least one property/value pair in it");
 
             ICriteria criteria = this.Session.CreateCriteria(typeof(T));
 
@@ -188,7 +189,7 @@ namespace SharpArch.NHibernate
         /// </summary>
         public virtual T SaveOrUpdate(T entity)
         {
-            Check.Require(!(entity is IHasAssignedId<TId>), "For better clarity and reliability, Entities with an assigned Id must call Save or Update");
+            Contract.Requires(!(entity is IHasAssignedId<TId>), "For better clarity and reliability, Entities with an assigned Id must call Save or Update");
 
             this.Session.SaveOrUpdate(entity);
             return entity;

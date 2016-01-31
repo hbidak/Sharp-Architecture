@@ -1,12 +1,12 @@
 ﻿namespace SharpArch.Web.Http.Castle
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
     using global::Castle.Core;
     using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
-    using SharpArch.Domain;
 
     /// <summary>
     /// Contains Castle Windsor related HTTP controller extension methods.
@@ -21,8 +21,8 @@
         /// <returns>A container.</returns>
         public static IWindsorContainer RegisterHttpControllers(this IWindsorContainer container, params Type[] controllerTypes)
         {
-            Check.Require(container != null);
-            Check.Require(controllerTypes != null);
+            Contract.Requires(container != null);
+            Contract.Requires(controllerTypes != null);
 
             foreach (Type type in controllerTypes.Where(type => type.IsHttpController()))
             {
@@ -41,8 +41,8 @@
         /// <returns>A container.</returns>
         public static IWindsorContainer RegisterHttpControllers(this IWindsorContainer container, params Assembly[] assemblies)
         {
-            Check.Require(container != null);
-            Check.Require(assemblies != null);
+            Contract.Requires(container != null);
+            Contract.Requires(assemblies != null);
 
             foreach (Assembly assembly in assemblies)
             {

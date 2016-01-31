@@ -1,13 +1,15 @@
+#if LEGACY_DESIGN_BY_CONTRACT
 namespace SharpArch.Domain
 {
     using System;
 
     // End Check
-    #region Exceptions
+#region Exceptions
 
     /// <summary>
     ///     An exception that is raised when an assertion check fails.
     /// </summary>
+    [Obsolete("Will be removed in next version. Please use Microsoft Code Contracts.")]
     public class AssertionException : DesignByContractException
     {
         /// <summary>
@@ -37,5 +39,6 @@ namespace SharpArch.Domain
         }
     }
 
-    #endregion // Exception classes
+#endregion // Exception classes
 }
+#endif

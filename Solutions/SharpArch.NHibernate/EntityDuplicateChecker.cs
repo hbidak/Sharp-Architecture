@@ -1,6 +1,7 @@
 ﻿namespace SharpArch.NHibernate
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
 
@@ -28,7 +29,7 @@
         /// </summary>
         public bool DoesDuplicateExistWithTypedIdOf<TId>(IEntityWithTypedId<TId> entity)
         {
-            Check.Require(entity != null, "Entity may not be null when checking for duplicates");
+            Contract.Requires(entity != null, "Entity may not be null when checking for duplicates");
 
             var session = GetSessionFor(entity);
 

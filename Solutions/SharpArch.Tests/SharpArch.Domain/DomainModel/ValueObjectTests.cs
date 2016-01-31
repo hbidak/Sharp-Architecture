@@ -1,19 +1,21 @@
+// ReSharper disable InternalMembersMustHaveComments
 namespace Tests.SharpArch.Domain.DomainModel
 {
+    using System;
     using NUnit.Framework;
 
     using global::SharpArch.Domain;
     using global::SharpArch.Domain.DomainModel;
 
     [TestFixture]
-    public class ValueObjectTests
+    internal class ValueObjectTests
     {
         [Test]
         public void CannotHaveValueObjectWithDomainSignatureProperties()
         {
             var invalidValueObject = new ValueObjectWithDomainSignature();
-
-            Assert.Throws<PreconditionException>(() => invalidValueObject.GetSignatureProperties());
+            // todo: check exception type
+            Assert.Throws<ArgumentException>(() => invalidValueObject.GetSignatureProperties());
         }
 
         [Test]

@@ -27,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -133,7 +134,6 @@
     <Compile Include="ServiceLocatorHelper.cs" />
     <Compile Include="SharpArch.Domain\DomainModel\EntityWithTypedIdSpecs.cs" />
     <Compile Include="SharpArch.Domain\FileCacheSpecs.cs" />
-    <Compile Include="SharpArch.Domain\DesignByContractSpecs.cs" />
     <Compile Include="SharpArch.Domain\SafeServiceLocatorSpecs.cs" />
   </ItemGroup>
   <ItemGroup>

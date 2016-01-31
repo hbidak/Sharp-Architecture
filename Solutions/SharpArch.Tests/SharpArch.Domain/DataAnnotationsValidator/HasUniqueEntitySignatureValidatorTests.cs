@@ -9,8 +9,7 @@ namespace Tests.SharpArch.Domain.DataAnnotationsValidator
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics;
-
-
+    using System.Diagnostics.Contracts;
     using CommonServiceLocator.WindsorAdapter;
     using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
@@ -87,7 +86,7 @@ namespace Tests.SharpArch.Domain.DataAnnotationsValidator
         {
             var invalidCombination = new ObjectWithStringIdAndValidatorForIntId { Name = "whatever" };
 
-            Assert.Throws<PreconditionException>(() => invalidCombination.ValidationResults(ValidationContextFor(invalidCombination)));
+            Assert.Throws<ArgumentException>(() => invalidCombination.ValidationResults(ValidationContextFor(invalidCombination)));
         }
 
         [SetUp]
@@ -113,14 +112,14 @@ namespace Tests.SharpArch.Domain.DataAnnotationsValidator
 
         private class DuplicateCheckerStub : IEntityDuplicateChecker
         {
-            public bool DoesDuplicateExistWithTypedIdOf<IdT>(IEntityWithTypedId<IdT> entity)
+            public bool DoesDuplicateExistWithTypedIdOf<TId>(IEntityWithTypedId<TId> entity)
             {
-                Check.Require(entity != null);
+                Contract.Requires(entity != null);
 
                 if (entity as Contractor != null)
                 {
                     var contractor = entity as Contractor;
-                    return !string.IsNullOrEmpty(contractor.Name) && contractor.Name.ToLower() == "codai";
+                    return !string.IsNullOrEmpty(contractor.Name) && contractor.Name.ToLower() == @"codai";
                 }
                 else if (entity as User != null)
                 {
@@ -130,7 +129,7 @@ namespace Tests.SharpArch.Domain.DataAnnotationsValidator
                 else if (entity as ObjectWithGuidId != null)
                 {
                     var objectWithGuidId = entity as ObjectWithGuidId;
-                    return !string.IsNullOrEmpty(objectWithGuidId.Name) && objectWithGuidId.Name.ToLower() == "codai";
+                    return !string.IsNullOrEmpty(objectWithGuidId.Name) && objectWithGuidId.Name.ToLower() == @"codai";
                 }
 
                 // By default, simply return false for no duplicates found

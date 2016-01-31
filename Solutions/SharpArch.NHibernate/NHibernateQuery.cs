@@ -1,6 +1,6 @@
 namespace SharpArch.NHibernate
 {
-    using Domain;
+    using System.Diagnostics.Contracts;
     using global::NHibernate;
 
     public abstract class NHibernateQuery
@@ -9,7 +9,7 @@ namespace SharpArch.NHibernate
 
         protected NHibernateQuery(ISession session)
         {
-            Check.Require(session != null, "Session is required.");
+            Contract.Requires(session != null, "Session is required.");
             this.session = session;
         }
 

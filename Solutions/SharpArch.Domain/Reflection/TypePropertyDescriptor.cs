@@ -1,6 +1,7 @@
 namespace SharpArch.Domain.Reflection
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Reflection;
 
     /// <summary>
@@ -18,7 +19,7 @@ namespace SharpArch.Domain.Reflection
         /// <param name="properties">The injectable properties.</param>
         public TypePropertyDescriptor(Type ownerType, PropertyInfo[] properties)
         {
-            Check.Require(ownerType != null, "Owner type information can not be null.");
+            Contract.Requires(ownerType != null, "Owner type information can not be null.");
 
             OwnerType = ownerType;
             if (properties != null && properties.Length > 0)

@@ -3,6 +3,7 @@
     using System;
     using System.Configuration;
     using System.Diagnostics;
+    using System.Diagnostics.Contracts;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -78,7 +79,7 @@
         {
             var mappingAssembliesSetting = ConfigurationManager.AppSettings["nhibernate.mapping.assembly"];
 
-            Check.Require(
+            Contract.Ensures(
                 !string.IsNullOrWhiteSpace(mappingAssembliesSetting),
                 "Please add an AppSetting to your app.config for 'nhibernate.mapping.assembly.' This setting " +
                 "takes a comma delimited list of assemblies containing NHibernate mapping files. Including '.dll' " +

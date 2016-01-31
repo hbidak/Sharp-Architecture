@@ -1,3 +1,4 @@
+#if LEGACY_DESIGN_BY_CONTRACT
 namespace SharpArch.Domain
 {
     using System;
@@ -9,6 +10,7 @@ namespace SharpArch.Domain
     ///     Catch this exception type if you wish to differentiate between 
     ///     any design by contract exception and other runtime exceptions.
     /// </remarks>
+    [Obsolete("Will be removed in next version. Please use Microsoft Code Contracts.")]
     public class DesignByContractException : ApplicationException
     {
         /// <summary>
@@ -38,3 +40,4 @@ namespace SharpArch.Domain
         }
     }
 }
+#endif

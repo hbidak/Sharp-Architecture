@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
 
@@ -80,16 +81,16 @@
                 this.GetType().GetProperties().Where(
                     p => Attribute.IsDefined(p, typeof(DomainSignatureAttribute), true));
 
-            string message = "Properties were found within " + this.GetType() +
-                             @" having the
-                [DomainSignature] attribute. The domain signature of a value object includes all
-                of the properties of the object by convention; consequently, adding [DomainSignature]
-                to the properties of a value object's properties is misleading and should be removed. 
-                Alternatively, you can inherit from Entity if that fits your needs better.";
+            if (invalidlyDecoratedProperties.Any())
+            {
+                string message = "Properties were found within " + this.GetType() +
+                 " having the [DomainSignature] attribute. " +
+                    "The domain signature of a value object includes all of the properties of the object by convention; " +
+                    "consequently, adding [DomainSignature] to the properties of a value object's properties is misleading and should be removed. " +
+                    "Alternatively, you can inherit from Entity if that fits your needs better.";
 
-            Check.Require(
-                !invalidlyDecoratedProperties.Any(), 
-                message);
+                throw new InvalidOperationException(message);
+            }
 
             return this.GetType().GetProperties();
         }

@@ -1,6 +1,7 @@
 ﻿namespace SharpArch.NHibernate
 {
     using System;
+    using System.Diagnostics.Contracts;
     using Domain;
 
     /// <summary>
@@ -32,7 +33,7 @@
         public static string GetKeyFrom(object target)
         {
             // todo: cache sessionKey value
-            Check.Require(target != null, "Target is required.");
+            Contract.Requires(target != null, "Target is required.");
 
             var objectType = target.GetType();
 

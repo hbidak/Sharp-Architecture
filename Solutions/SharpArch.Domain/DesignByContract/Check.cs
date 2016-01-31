@@ -1,3 +1,4 @@
+#if LEGACY_DESIGN_BY_CONTRACT
 namespace SharpArch.Domain
 {
     using System;
@@ -20,7 +21,7 @@ namespace SharpArch.Domain
     ///             {
     ///                 try
     ///                 {
-    ///                     Check.Require(x > 1, "x must be > 1");
+    ///                     Contract.Requires(x > 1, "x must be > 1");
     ///                 }
     ///                 catch (System.Exception ex)
     ///                 {
@@ -54,6 +55,7 @@ namespace SharpArch.Domain
     ///         object and, for a Release build, only exception-handling is possible.
     ///     </para>
     /// </remarks>
+    [Obsolete("Will be removed in next version. Please use Microsoft Code Contracts.")]
     public static class Check
     {
         private static bool useAssertions;
@@ -351,3 +353,4 @@ namespace SharpArch.Domain
         }
     }
 }
+#endif

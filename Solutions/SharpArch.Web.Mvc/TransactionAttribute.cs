@@ -1,9 +1,9 @@
 namespace SharpArch.Web.Mvc
 {
     using System.Data;
+    using System.Diagnostics.Contracts;
     using System.Runtime.CompilerServices;
     using System.Web.Mvc;
-    using SharpArch.Domain;
     using SharpArch.Domain.PersistenceSupport;
 
     /// <summary>
@@ -72,7 +72,7 @@ namespace SharpArch.Web.Mvc
         /// <param name="filterContext"></param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            Check.Require(this.TransactionManager != null,
+            Contract.Requires(this.TransactionManager != null,
                 "TransactionManager was null, make sure implementation of TransactionManager is registered in the IoC container.");
 
             if (filterContext.IsChildAction)

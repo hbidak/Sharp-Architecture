@@ -1,11 +1,11 @@
 ﻿namespace SharpArch.Web.Http
 {
     using System.Data;
+    using System.Diagnostics.Contracts;
     using System.Net.Http;
     using System.Runtime.CompilerServices;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using SharpArch.Domain;
     using SharpArch.Domain.PersistenceSupport;
 
     /// <summary>
@@ -73,7 +73,7 @@
         {
             var transactionManager =
                 (ITransactionManager) request.GetDependencyScope().GetService(typeof(ITransactionManager));
-            Check.Require(transactionManager != null,
+            Contract.Requires(transactionManager != null,
                 "TransactionManager was null, register an implementation of TransactionManager in the IoC container.");
 
             return transactionManager;

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -93,7 +94,7 @@
         /// </remarks>
         public NHibernateSessionFactoryBuilder ExposeConfiguration(Action<Configuration> config)
         {
-            Check.Require(config != null, "Please provide callback.");
+            Contract.Requires(config != null, "Please provide callback.");
             this.exposeConfiguration = config;
 
             return this;
@@ -106,28 +107,28 @@
 
         public NHibernateSessionFactoryBuilder UseConfigurationCache(INHibernateConfigurationCache configurationCache)
         {
-            Check.Require(configurationCache != null, "Please provide configuration cache instance.");
+            Contract.Requires(configurationCache != null, "Please provide configuration cache instance.");
             this.configurationCache = configurationCache;
             return this;
         }
 
         public NHibernateSessionFactoryBuilder AddMappingAssemblies(IEnumerable<string> mappingAssemblies)
         {
-            Check.Require(mappingAssemblies != null, "Please specify mapping assemblies.");
+            Contract.Requires(mappingAssemblies != null, "Please specify mapping assemblies.");
             this.mappingAssemblies.AddRange(mappingAssemblies);
             return this;
         }
 
         public NHibernateSessionFactoryBuilder UseAutoPersitenceModel(AutoPersistenceModel autoPersistenceModel)
         {
-            Check.Require(autoPersistenceModel != null);
+            Contract.Requires(autoPersistenceModel != null);
             this.autoPersistenceModel = autoPersistenceModel;
             return this;
         }
 
         public NHibernateSessionFactoryBuilder UseProperties(IDictionary<string, string> properties)
         {
-            Check.Require(properties != null);
+            Contract.Requires(properties != null);
             this.properties = properties;
 
             return this;
@@ -142,7 +143,7 @@
 
         public NHibernateSessionFactoryBuilder UseConfigFile(string nhibernateConfigFile)
         {
-            Check.Require(!string.IsNullOrEmpty(nhibernateConfigFile), "NHibernate config file must be specified");
+            Contract.Requires(!string.IsNullOrEmpty(nhibernateConfigFile), "NHibernate config file must be specified");
             configFile = nhibernateConfigFile;
 
             return this;
@@ -150,7 +151,7 @@
 
         public NHibernateSessionFactoryBuilder UsePersistenceConfigurer(IPersistenceConfigurer persistenceConfigurer)
         {
-            Check.Require(persistenceConfigurer != null);
+            Contract.Requires(persistenceConfigurer != null);
             this.persistenceConfigurer = persistenceConfigurer;
             return this;
         }

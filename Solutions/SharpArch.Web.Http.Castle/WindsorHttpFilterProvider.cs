@@ -5,13 +5,12 @@ namespace SharpArch.Web.Http.Castle
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
     using System.Web.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using Domain;
     using Domain.Reflection;
     using global::Castle.Core;
     using global::Castle.Windsor;
@@ -37,8 +36,8 @@ namespace SharpArch.Web.Http.Castle
         public WindsorHttpFilterProvider(IWindsorContainer container,
             ITypePropertyDescriptorCache typePropertyDescriptorCache)
         {
-            Check.Require(container != null);
-            Check.Require(typePropertyDescriptorCache != null);
+            Contract.Requires(container != null);
+            Contract.Requires(typePropertyDescriptorCache != null);
 
             this.container = container;
             this.typePropertyDescriptorCache = typePropertyDescriptorCache;
@@ -52,8 +51,8 @@ namespace SharpArch.Web.Http.Castle
         /// <returns>An enumeration of filters.</returns>
         public IEnumerable<FilterInfo> GetFilters(HttpConfiguration configuration, HttpActionDescriptor actionDescriptor)
         {
-            Check.Require(configuration != null);
-            Check.Require(actionDescriptor != null);
+            Contract.Requires(configuration != null);
+            Contract.Requires(actionDescriptor != null);
 
             var controllerFilters = actionDescriptor.ControllerDescriptor.GetFilters();
             var actionFilters = actionDescriptor.GetFilters();
