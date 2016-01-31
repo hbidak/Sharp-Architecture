@@ -2,11 +2,13 @@ namespace Suteki.TardisBank.Domain
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.Design;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using Events;
     using MediatR;
     using SharpArch.Domain;
-
+    using System.Diagnostics.CodeAnalysis;
     public class Parent : User
     {
         public Parent(string name, string userName, string password) : base(name, userName, password)
@@ -23,7 +25,7 @@ namespace Suteki.TardisBank.Domain
         // should be called when parent is first created.
         public virtual Parent Initialise(IMediator mediator)
         {
-            Check.Assert(mediator != null, "mediator is null");
+            Contract.Requires(mediator != null, "mediator is null");
             this.ActivationKey = Guid.NewGuid().ToString();
             mediator.Publish(new NewParentCreatedEvent(this));
             return this;
@@ -37,6 +39,7 @@ namespace Suteki.TardisBank.Domain
             return child;
         }
 
+        [SuppressMessage("Microsoft.Contracts", "CC1055", Justification = "Check perfomed in MakePaymentTo(Child, decimal, string)")]
         public virtual void MakePaymentTo(Child child, decimal amount)
         {
             this.MakePaymentTo(child, amount, string.Format("Payment from {0}", this.Name));
@@ -44,6 +47,7 @@ namespace Suteki.TardisBank.Domain
 
         public virtual void MakePaymentTo(Child child, decimal amount, string description)
         {
+            Contract.Requires(child != null);
             if (!this.HasChild(child))
             {
                 throw new TardisBankException("{0} is not a child of {1}", child.Name, this.Name);
@@ -53,6 +57,7 @@ namespace Suteki.TardisBank.Domain
 
         public virtual bool HasChild(Child child)
         {
+            Contract.Requires(child != null);
             return this.Children.Any(x => x == child);
         }
 

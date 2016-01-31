@@ -2,6 +2,7 @@ namespace Suteki.TardisBank.Domain
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using MediatR;
     using SharpArch.Domain;
@@ -49,7 +50,7 @@ namespace Suteki.TardisBank.Domain
 
         public virtual void SendMessage(string text, IMediator mediator)
         {
-            Check.Assert(mediator != null, "mediator is null");
+            Contract.Requires(mediator != null, "mediator is null");
             this.Messages.Add(new Message(DateTime.Now.Date, text, this));
             this.RemoveOldMessages();
 
