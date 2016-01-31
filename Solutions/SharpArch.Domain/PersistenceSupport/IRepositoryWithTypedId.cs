@@ -1,6 +1,9 @@
 namespace SharpArch.Domain.PersistenceSupport
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Diagnostics.Contracts;
 
     /// <summary>
     ///     Defines the public members of a class that implements the repository pattern for entities
@@ -8,6 +11,7 @@ namespace SharpArch.Domain.PersistenceSupport
     /// </summary>
     /// <typeparam name="T">The entity type.</typeparam>
     /// <typeparam name="TId">The type of the entity ID.</typeparam>
+    [ContractClass(typeof(IRepositoryWithTypedIdContract<,>))]
     public interface IRepositoryWithTypedId<T, in TId>
     {
         /// <summary>
@@ -54,7 +58,7 @@ namespace SharpArch.Domain.PersistenceSupport
 
 
         /// <summary>
-        /// Dissasociates the entity with the ORM so that changes made to it are not automatically 
+        /// Disassociates the entity with the ORM so that changes made to it are not automatically 
         /// saved to the database.
         /// </summary>
         /// <remarks>
@@ -74,4 +78,68 @@ namespace SharpArch.Domain.PersistenceSupport
         /// </summary>
         void Delete(TId id);
     }
+
+
+    #region Code contract definition
+
+    // ReSharper disable once InternalMembersMustHaveComments
+    // ReSharper disable once InconsistentNaming
+    [SuppressMessage("ReSharper", "InternalMembersMustHaveComments")]
+    [ContractClassFor(typeof(IRepositoryWithTypedId<,>))]
+    abstract class IRepositoryWithTypedIdContract<T, TId> : IRepositoryWithTypedId<T, TId>
+    {
+        public ITransactionManager TransactionManager
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<ITransactionManager>() != null);
+                return default(ITransactionManager);
+            }
+        }
+
+        public T Get(TId id)
+        {
+            Contract.Ensures(Contract.Result<T>() != null);
+            return default(T);
+        }
+
+        public IList<T> GetAll()
+        {
+            Contract.Ensures(Contract.Result<IList<T>>() != null);
+            return null;
+        }
+
+        public T Save(T entity)
+        {
+            Contract.Requires<ArgumentNullException>(entity != null, nameof(entity));
+            Contract.Ensures(Contract.Result<T>() != null);
+            return default(T);
+        }
+
+        public T SaveOrUpdate(T entity)
+        {
+            Contract.Requires<ArgumentNullException>(entity != null, nameof(entity));
+            Contract.Ensures(Contract.Result<T>() != null);
+            return default(T);
+        }
+
+        public void Evict(T entity)
+        {
+            Contract.Requires<ArgumentNullException>(entity != null, nameof(entity));
+        }
+
+        public void Delete(T entity)
+        {
+            Contract.Requires<ArgumentNullException>(entity != null, nameof(entity));
+        }
+
+        /// <summary>
+        ///     Deletes the entity that matches the provided ID.
+        /// </summary>
+        public void Delete(TId id)
+        {
+        }
+    }
+
+    #endregion
 }

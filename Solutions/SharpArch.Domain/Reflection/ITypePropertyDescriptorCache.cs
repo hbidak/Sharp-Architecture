@@ -1,6 +1,8 @@
 namespace SharpArch.Domain.Reflection
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Diagnostics.Contracts;
     using DomainModel;
 
     /// <summary>
@@ -9,6 +11,7 @@ namespace SharpArch.Domain.Reflection
     /// <remarks>Implementation is thread-safe.
     /// todo: update <see cref="BaseObject"/> to use cache.
     /// </remarks>
+    [ContractClass(typeof(ITypePropertyDescriptorCacheContract))]
     public interface ITypePropertyDescriptorCache
     {
         /// <summary>
@@ -35,5 +38,39 @@ namespace SharpArch.Domain.Reflection
         /// Returns number of entries in the cache.
         /// </summary>
         int Count { get; }
+    }
+
+    [ContractClassFor(typeof(ITypePropertyDescriptorCache))]
+    [SuppressMessage("ReSharper", "InternalMembersMustHaveComments")]
+    // ReSharper disable once InconsistentNaming
+    // ReSharper disable once InternalMembersMustHaveComments
+    abstract class ITypePropertyDescriptorCacheContract : ITypePropertyDescriptorCache
+    {
+        public TypePropertyDescriptor Find(Type type)
+        {
+            Contract.Requires(type != null);
+            return null;
+        }
+
+        public TypePropertyDescriptor GetOrAdd(Type type, Func<Type, TypePropertyDescriptor> factory)
+        {
+            Contract.Requires(type != null);
+            Contract.Requires(factory != null);
+            return null;
+        }
+
+        public void Clear()
+        {
+            Contract.Ensures(Count == 0);
+        }
+
+        public int Count
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<int>() >= 0);
+                return default(int);
+            } 
+        }
     }
 }

@@ -35,7 +35,6 @@
         /// <returns></returns>
         public TypePropertyDescriptor GetOrAdd(Type type, Func<Type, TypePropertyDescriptor> factory)
         {
-            Contract.Requires(factory != null, "Value factory can not be null.");
             return this.cache.GetOrAdd(type, factory);
         }
 

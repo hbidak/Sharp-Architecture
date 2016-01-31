@@ -1,6 +1,7 @@
 namespace SharpArch.Domain.Specifications
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -19,6 +20,10 @@ namespace SharpArch.Domain.Specifications
         /// <returns>A query specification.</returns>
         public static QuerySpecification<T> And<T>(this QuerySpecification<T> specification1, QuerySpecification<T> specification2)
         {
+            Contract.Requires<ArgumentNullException>(specification1 != null, nameof(specification1));
+            Contract.Requires<ArgumentNullException>(specification2 != null, nameof(specification2));
+            Contract.Ensures(Contract.Result<QuerySpecification<T>>() != null);
+            
             var adhocSpec1 = new AdHoc<T>(specification1.MatchingCriteria);
             var adhocSpec2 = new AdHoc<T>(specification2.MatchingCriteria);
 
@@ -38,6 +43,10 @@ namespace SharpArch.Domain.Specifications
         /// <returns>A query specification.</returns>
         public static QuerySpecification<T> Or<T>(this QuerySpecification<T> specification1, QuerySpecification<T> specification2)
         {
+            Contract.Requires<ArgumentNullException>(specification1 != null, nameof(specification1));
+            Contract.Requires<ArgumentNullException>(specification2 != null, nameof(specification2));
+            Contract.Ensures(Contract.Result<QuerySpecification<T>>() != null);
+
             var adhocSpec1 = new AdHoc<T>(specification1.MatchingCriteria);
             var adhocSpec2 = new AdHoc<T>(specification2.MatchingCriteria);
 
