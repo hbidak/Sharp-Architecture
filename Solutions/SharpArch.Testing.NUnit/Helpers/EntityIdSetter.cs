@@ -1,8 +1,9 @@
 ﻿namespace SharpArch.Testing.NUnit.Helpers
 {
+    using System;
     using System.Diagnostics.Contracts;
     using System.Reflection;
-
+    using FluentNHibernate.Mapping;
     using SharpArch.Domain;
     using SharpArch.Domain.DomainModel;
 
@@ -20,6 +21,8 @@
         /// </summary>
         public static void SetIdOf<TId>(IEntityWithTypedId<TId> entity, TId id)
         {
+            Contract.Requires<ArgumentNullException>(entity != null, nameof(entity));
+            
             // Set the data property reflectively
             var idProperty = entity.GetType().GetProperty("Id", BindingFlags.Public | BindingFlags.Instance);
 

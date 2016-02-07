@@ -29,7 +29,6 @@
         /// </summary>
         public bool DoesDuplicateExistWithTypedIdOf<TId>(IEntityWithTypedId<TId> entity)
         {
-            Contract.Requires(entity != null, "Entity may not be null when checking for duplicates");
 
             var session = GetSessionFor(entity);
 

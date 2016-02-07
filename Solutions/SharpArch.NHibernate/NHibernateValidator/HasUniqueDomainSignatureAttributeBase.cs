@@ -1,5 +1,6 @@
 namespace SharpArch.NHibernate.NHibernateValidator
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics.Contracts;
     using System.Globalization;
@@ -9,7 +10,7 @@ namespace SharpArch.NHibernate.NHibernateValidator
     public class HasUniqueDomainSignatureAttributeBase : ValidationAttribute
     {
         protected HasUniqueDomainSignatureAttributeBase()
-            : base("Provided values matched an existing, duplicate entity")
+            : base("Provided values matched an existing, duplicate entity.")
         {
         }
 
@@ -21,8 +22,8 @@ namespace SharpArch.NHibernate.NHibernateValidator
         protected ValidationResult DoValidate<TId>(object value, ValidationContext validationContext)
         {
             var entityToValidate = value as IEntityWithTypedId<TId>;
-            Contract.Requires(
-                entityToValidate != null, string.Format(CultureInfo.InvariantCulture,
+            if (entityToValidate == null) 
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture,
                     "This validator must be used at the class level of an IDomainWithTypedId<{0}>. The type you provided was {1}",
                     typeof(TId), value.GetType())
                 );

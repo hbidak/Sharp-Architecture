@@ -79,8 +79,7 @@ namespace SharpArch.NHibernate
 
         public virtual IList<T> FindAll(IDictionary<string, object> propertyValuePairs)
         {
-            Contract.Requires(propertyValuePairs != null && propertyValuePairs.Count > 0, "propertyValuePairs was null or empty; " + "it has to have at least one property/value pair in it");
-
+            
             ICriteria criteria = this.Session.CreateCriteria(typeof(T));
 
             foreach (string key in propertyValuePairs.Keys)

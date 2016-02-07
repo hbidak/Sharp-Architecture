@@ -73,7 +73,7 @@
         {
             var transactionManager =
                 (ITransactionManager) request.GetDependencyScope().GetService(typeof(ITransactionManager));
-            Contract.Requires(transactionManager != null,
+            Contract.Assert(transactionManager != null,
                 "TransactionManager was null, register an implementation of TransactionManager in the IoC container.");
 
             return transactionManager;

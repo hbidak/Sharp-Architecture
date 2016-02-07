@@ -15,6 +15,7 @@ namespace SharpArch.NHibernate.Contracts.Repositories
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TId">The type of the identifier.</typeparam>
     /// <seealso cref="SharpArch.Domain.PersistenceSupport.IRepositoryWithTypedId{T, TId}" />
+    [ContractClass(typeof(INHibernateRepositoryWithTypedIdContract<,>))]
     public interface INHibernateRepositoryWithTypedId<T, in TId> : IRepositoryWithTypedId<T, TId>
     {
         /// <summary>
@@ -70,6 +71,7 @@ namespace SharpArch.NHibernate.Contracts.Repositories
     // ReSharper disable once InconsistentNaming
     // ReSharper disable once InternalMembersMustHaveComments
     [SuppressMessage("ReSharper", "InternalMembersMustHaveComments")]
+    [ContractClassFor(typeof(INHibernateRepositoryWithTypedId<,>))]
     abstract class INHibernateRepositoryWithTypedIdContract<T, TId> : INHibernateRepositoryWithTypedId<T, TId>
     {
         public IList<T> FindAll(IDictionary<string, object> propertyValuePairs)
@@ -89,6 +91,7 @@ namespace SharpArch.NHibernate.Contracts.Repositories
         public T FindOne(IDictionary<string, object> propertyValuePairs)
         {
             Contract.Requires<ArgumentNullException>(propertyValuePairs != null, nameof(propertyValuePairs));
+            Contract.Requires(propertyValuePairs != null && propertyValuePairs.Count > 0, "propertyValuePairs was null or empty; it has to have at least one property/value pair in it.");
             Contract.ForAll(propertyValuePairs, kvp => string.IsNullOrWhiteSpace(kvp.Key) == false);
 
             return default(T);
