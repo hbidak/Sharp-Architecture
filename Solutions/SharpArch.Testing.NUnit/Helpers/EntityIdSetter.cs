@@ -3,8 +3,6 @@
     using System;
     using System.Diagnostics.Contracts;
     using System.Reflection;
-    using FluentNHibernate.Mapping;
-    using SharpArch.Domain;
     using SharpArch.Domain.DomainModel;
 
     /// <summary>
@@ -19,6 +17,7 @@
         /// <summary>
         ///     Uses reflection to set the Id of a <see cref = "EntityWithTypedId{IdT}" />.
         /// </summary>
+        /// <exception cref="InvalidOperationException">Property <c>Id</c>could not be found</exception>
         public static void SetIdOf<TId>(IEntityWithTypedId<TId> entity, TId id)
         {
             Contract.Requires<ArgumentNullException>(entity != null, nameof(entity));
@@ -26,7 +25,8 @@
             // Set the data property reflectively
             var idProperty = entity.GetType().GetProperty("Id", BindingFlags.Public | BindingFlags.Instance);
 
-            Contract.Ensures(idProperty != null, "idProperty could not be found");
+            if (idProperty == null)
+                throw new InvalidOperationException("Property 'Id' could not be found.");
 
             idProperty.SetValue(entity, id, null);
         }

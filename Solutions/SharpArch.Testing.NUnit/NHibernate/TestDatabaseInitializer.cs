@@ -75,12 +75,13 @@
         /// Returns list of assemblies containing NHibernate mappings.
         /// </summary>
         /// <param name="basePath">Base path to prepend assembly names.</param>
+        /// <exception cref="InvalidOperationException">App setting <c>nhibernate.mapping.assembly</c> is missing.</exception>
         public static string[] GetMappingAssemblies(string basePath)
         {
             var mappingAssembliesSetting = ConfigurationManager.AppSettings["nhibernate.mapping.assembly"];
 
-            Contract.Ensures(
-                !string.IsNullOrWhiteSpace(mappingAssembliesSetting),
+            if (string.IsNullOrWhiteSpace(mappingAssembliesSetting))
+                throw new InvalidOperationException(
                 "Please add an AppSetting to your app.config for 'nhibernate.mapping.assembly.' This setting " +
                 "takes a comma delimited list of assemblies containing NHibernate mapping files. Including '.dll' " +
                 "at the end of each is optional.");
